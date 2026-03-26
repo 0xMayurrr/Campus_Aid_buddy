@@ -52,7 +52,7 @@ export default function Landing() {
           <div className="flex items-center gap-2 md:gap-3">
             <img src="/Campus_Aid_Buddyy_Logo_with_Open_Hand_Icon-removebg-preview.png" alt="Campus Aid Buddy" className="w-10 h-10 md:w-16 md:h-16" />
             <span className="text-lg md:text-2xl font-semibold text-foreground font-sans">
-              <span className="hidden sm:inline">Campus Aid Buddy</span>
+              <span className="hidden sm:inline">Campus Aid</span>
               <span className="sm:hidden">CAB</span>
             </span>
           </div>
@@ -167,7 +167,7 @@ export default function Landing() {
             Ready to Transform Your Campus?
           </h2>
           <p className="text-base md:text-lg mb-6 md:mb-8 text-primary-foreground px-4">
-            Join thousands of students and staff already using Campus Aid Buddy
+            Join thousands of students and staff already using Campus Aid
           </p>
           <Button 
             onClick={() => navigate('/auth')}
@@ -185,11 +185,11 @@ export default function Landing() {
           <div className="flex items-center gap-2 md:gap-3">
             <img src="/Campus_Aid_Buddyy_Logo_with_Open_Hand_Icon-removebg-preview.png" alt="Campus Aid Buddy" className="w-10 h-10 md:w-12 md:h-12" />
             <span className="text-lg md:text-xl font-semibold text-foreground">
-              Campus Aid Buddy
+              Campus Aid
             </span>
           </div>
           <p className="text-xs md:text-sm text-muted-foreground text-center">
-            © 2024 Campus Aid Buddy. All rights reserved.
+            © 2024 Campus Aid. All rights reserved.
           </p>
         </div>
       </footer>
