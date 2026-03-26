@@ -1,96 +1,53 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useState } from 'react';
 import { DashboardSidebar } from './DashboardSidebar';
-import { MobileBottomNav } from './MobileNav';
-import { cn } from '@/lib/utils';
-import { Bell, Search, Menu } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { Menu, X, Bell } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { useIsMobile } from '@/hooks/use-mobile';
 
-interface DashboardLayoutProps {
-  children: ReactNode;
-  title?: string;
-  subtitle?: string;
-}
-
-export function DashboardLayout({ children, title, subtitle }: DashboardLayoutProps) {
+export function DashboardLayout({ children }: { children: ReactNode }) {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const { user } = useAuth();
-  const isMobile = useIsMobile();
 
   return (
-    <div className="flex h-screen bg-background">
+    <div className="flex h-screen bg-background overflow-hidden text-slate-900">
       {/* Desktop Sidebar */}
-      <div className="hidden lg:block w-64 xl:w-72">
-        <DashboardSidebar />
-      </div>
+      <DashboardSidebar className="hidden lg:flex flex-shrink-0" />
+
+      {/* Mobile Sidebar Overlay */}
+      {sidebarOpen && (
+        <div className="fixed inset-0 z-50 lg:hidden">
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setSidebarOpen(false)} />
+          <div className="absolute left-0 top-0 bottom-0">
+            <DashboardSidebar className="flex" forceExpanded />
+          </div>
+        </div>
+      )}
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col min-h-screen overflow-hidden">
-        {/* Header */}
-        <header className="h-16 lg:h-18 border-b border-border bg-card px-4 lg:px-6 xl:px-8 flex items-center justify-between shrink-0">
-          <div className="flex items-center gap-3 lg:gap-4 min-w-0 flex-1">
-            {/* Mobile Menu */}
-            <Sheet>
-              <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="lg:hidden shrink-0">
-                  <Menu className="h-5 w-5" />
-                </Button>
-              </SheetTrigger>
-              <SheetContent side="left" className="p-0 w-72 sm:w-80">
-                <DashboardSidebar />
-              </SheetContent>
-            </Sheet>
-
-            <div className="min-w-0 flex-1">
-              {title && <h1 className="text-xl lg:text-2xl font-semibold text-foreground truncate">{title}</h1>}
-              {subtitle && <p className="text-sm lg:text-base text-muted-foreground truncate hidden sm:block mt-1">{subtitle}</p>}
-            </div>
+      <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
+        {/* Top bar (mobile) */}
+        <div className="flex items-center justify-between px-4 py-3 border-b border-slate-200 lg:hidden bg-white">
+          <button
+            onClick={() => setSidebarOpen(true)}
+            className="p-2 text-slate-500 hover:text-slate-900 rounded-lg hover:bg-slate-100"
+          >
+            <Menu className="w-5 h-5" />
+          </button>
+          <div className="flex items-center gap-2">
+            <img src="/Campus_Aid_Buddyy_Logo_with_Open_Hand_Icon-removebg-preview.png" alt="CAB" className="h-8 w-auto" />
+            <span className="text-sm font-bold text-slate-900">Campus Aid</span>
           </div>
-
-          <div className="flex items-center gap-2 lg:gap-4 shrink-0">
-            {/* Search - Desktop */}
-            <div className="hidden lg:flex items-center gap-2 bg-background rounded-lg px-4 py-2 border border-border min-w-0">
-              <Search className="w-4 h-4 text-muted-foreground shrink-0" />
-              <Input 
-                placeholder="Search tickets, users, or content..." 
-                className="border-0 bg-transparent h-6 w-64 xl:w-80 focus-visible:ring-0 px-0 text-sm"
-              />
-            </div>
-
-            {/* Mobile Search Button */}
-            <Button variant="ghost" size="icon" className="lg:hidden">
-              <Search className="w-4 h-4" />
-            </Button>
-
-            {/* Notifications */}
-            <Button variant="ghost" size="icon" className="relative">
-              <Bell className="w-5 h-5" />
-              <span className="absolute top-1 right-1 w-2 h-2 bg-destructive rounded-full" />
-            </Button>
-
-            {/* User Avatar */}
-            <div className="w-9 h-9 lg:w-10 lg:h-10 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-medium text-sm lg:text-base">
-              {user?.name?.charAt(0) || 'U'}
-            </div>
+          <div className="w-8 h-8 rounded-full bg-orange-500 flex items-center justify-center text-white text-xs font-bold">
+            {user?.name?.charAt(0) || 'U'}
           </div>
-        </header>
+        </div>
 
-        {/* Page Content */}
-        <main className={cn(
-          "flex-1 overflow-y-auto",
-          "p-4 lg:p-6 xl:p-8",
-          isMobile && "pb-20" // Add bottom padding for mobile nav
-        )}>
-          <div className="max-w-7xl mx-auto">
+        {/* Scrollable content area */}
+        <main className="flex-1 overflow-y-auto">
+          <div className="max-w-7xl mx-auto p-4 lg:p-8">
             {children}
           </div>
         </main>
       </div>
-
-      {/* Mobile Bottom Navigation */}
-      <MobileBottomNav />
     </div>
   );
 }
