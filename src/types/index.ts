@@ -1,151 +1,113 @@
-// User roles for the campus system
-export type UserRole = 
-  | 'student'
-  | 'teaching_staff'
-  | 'tutor'
-  | 'department_staff'
-  | 'hod'
-  | 'admin'
-  | 'hostel_warden'
-  | 'security_staff'
-  | 'maintenance'
-  | 'transport_officer'
-  | 'lab_assistant'
-  | 'supporting_staff';
+// ── Roles ──────────────────────────────────────────────────────────────────
+export type UserRole = 'student' | 'faculty' | 'hod' | 'admin';
 
+// ── User ───────────────────────────────────────────────────────────────────
 export interface User {
-  id: string;
+  uid: string;
   email: string;
   name: string;
   role: UserRole;
-  department?: string;
-  rollNumber?: string;
-  avatar?: string;
-  createdAt: Date;
+  dept?: string;
+  year?: number;
+  cgpa?: number;
+  createdAt: string;
 }
 
-// Ticket system types
-export type TicketStatus = 'pending' | 'in_progress' | 'resolved' | 'escalated' | 'rejected';
-export type TicketCategory = 
+// ── Tickets ────────────────────────────────────────────────────────────────
+export type TicketStatus = 'submitted' | 'in_progress' | 'resolved' | 'closed';
+export type TicketPriority = 'low' | 'medium' | 'high' | 'urgent';
+export type TicketCategory =
+  | 'academic'
+  | 'facility'
   | 'complaint'
   | 'service_request'
-  | 'facility_issue'
-  | 'academic_query'
-  | 'hostel_issue'
-  | 'transport_issue'
-  | 'security_issue'
-  | 'maintenance'
+  | 'hostel'
+  | 'transport'
   | 'other';
-
-export type TicketPriority = 'low' | 'medium' | 'high' | 'urgent';
-
-export interface TicketLocation {
-  latitude: number;
-  longitude: number;
-  address?: string;
-  accuracy?: number;
-  campusZone?: string;
-  timestamp: Date;
-}
-
-export interface TicketActivityLog {
-  id: string;
-  ticketId: string;
-  action: string;
-  performedBy: string;
-  performedByRole: UserRole;
-  timestamp: Date;
-  notes?: string;
-}
 
 export interface Ticket {
   id: string;
-  ticketNumber: string;
   title: string;
-  description: string;
   category: TicketCategory;
+  dept: string;
+  description: string;
   status: TicketStatus;
   priority: TicketPriority;
-  department: string;
-  submittedBy: string;
-  submitterName: string;
-  submitterEmail: string;
-  submitterRollNumber?: string;
+  raisedBy: string;       // uid
+  raisedByName: string;
+  raisedByEmail: string;
   assignedTo?: string;
-  assignedRole?: UserRole;
-  location?: TicketLocation;
-  attachments?: string[];
-  activityLog: TicketActivityLog[];
-  createdAt: Date;
-  updatedAt: Date;
-  resolvedAt?: Date;
+  location?: string;
+  aiSummary?: string;
+  aiPriority?: TicketPriority;
+  createdAt: string;
+  updatedAt: string;
 }
 
-// Campus location types
-export interface CampusLocation {
+// ── Digital Library ────────────────────────────────────────────────────────
+export interface LibraryItem {
   id: string;
-  name: string;
-  type: 'academic' | 'hostel' | 'facility' | 'admin' | 'transport' | 'other';
-  description?: string;
-  latitude: number;
-  longitude: number;
-  qrCode?: string;
-  building?: string;
-  floor?: string;
-}
-
-// Notice types
-export interface Notice {
-  id: string;
+  displayId: string; // e.g. #SVCE-VID-101
   title: string;
-  content: string;
-  category: string;
-  department?: string;
-  targetRoles: UserRole[];
-  priority: 'normal' | 'important' | 'urgent';
-  publishedBy: string;
-  publishedAt: Date;
-  expiresAt?: Date;
-  isActive: boolean;
-}
-
-// Lecture/Video types
-export interface Lecture {
-  id: string;
-  title: string;
-  description?: string;
-  department: string;
-  course: string;
-  semester: string;
+  type: 'video' | 'pdf' | 'doc';
+  dept: string;
+  year: number;
   subject: string;
   topic?: string;
-  videoUrl: string;
-  thumbnailUrl?: string;
-  duration?: number;
+  description?: string;
   uploadedBy: string;
-  uploadedAt: Date;
-  isPublished: boolean;
+  uploadedByName: string;
+  url: string;
+  createdAt: string;
 }
 
-// Syllabus types
-export interface Syllabus {
+// ── Student Profile ────────────────────────────────────────────────────────
+export interface StudentProfile {
+  uid: string;
+  name: string;
+  email: string;
+  rollNo: string;
+  dept: string;
+  year: number;
+  cgpa: number;
+  attendance: Record<string, number>; // subject -> %
+  billing: {
+    status: 'paid' | 'pending' | 'overdue';
+    amount: number;
+    dueDate: string;
+  };
+  semester: number;
+  phone?: string;
+  photoUrl?: string;
+}
+
+// ── Announcements ──────────────────────────────────────────────────────────
+export interface Announcement {
   id: string;
   title: string;
-  department: string;
-  course: string;
-  semester: string;
-  subject: string;
-  fileUrl: string;
-  extractedContent?: string;
-  uploadedBy: string;
-  uploadedAt: Date;
+  body: string;
+  targetRole: UserRole | 'all';
+  postedBy: string;
+  postedByName: string;
+  createdAt: string;
 }
 
-// Department types
-export interface Department {
-  id: string;
-  name: string;
-  code: string;
-  hodId?: string;
-  description?: string;
+// ── Campus Growth ──────────────────────────────────────────────────────────
+export interface DeptGrowthData {
+  dept: string;
+  students: number;
+  placed: number;
+}
+
+export interface GrowthData {
+  totalStudents: number;
+  placedStudents: number;
+  companies: number;
+  events: number;
+  facultyCount: number;
+  avgCgpa: number;
+  deptWiseData: DeptGrowthData[];
+  yearWisePlacement: { year: string; percentage: number }[];
+  outcomeData: { name: string; value: number }[];
+  topCompanies: { name: string; hired: number; package: string }[];
 }
