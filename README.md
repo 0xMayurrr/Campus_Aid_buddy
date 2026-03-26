@@ -1,295 +1,178 @@
-# 📌 Campus Aid Buddy — Smart Campus Support & Academic Assistance Platform
+<div align="center">
+  <img src="public/Campus_Aid_Buddyy_Logo_with_Open_Hand_Icon-removebg-preview.png" alt="Campus Aid Buddy Logo" width="200"/>
+  <h1>🎓 Campus Aid Buddy</h1>
+  <p><strong>Smart Campus Support & Academic Assistance Enterprise Platform</strong></p>
 
-Campus Aid Buddy is a smart, role-based campus support system that integrates:
+  <!-- Badges -->
+  <p>
+    <img src="https://img.shields.io/badge/React-18-blue.svg?style=for-the-badge&logo=react" alt="React" />
+    <img src="https://img.shields.io/badge/TypeScript-5.0-blue.svg?style=for-the-badge&logo=typescript" alt="TypeScript" />
+    <img src="https://img.shields.io/badge/Vite-5.0-purple.svg?style=for-the-badge&logo=vite" alt="Vite" />
+    <img src="https://img.shields.io/badge/Firebase-10.0-yellow.svg?style=for-the-badge&logo=firebase" alt="Firebase" />
+    <img src="https://img.shields.io/badge/Tailwind_CSS-3.4-38B2AC.svg?style=for-the-badge&logo=tailwind-css" alt="Tailwind CSS" />
+  </p>
+</div>
 
-- **Student service request management**
-- **Department-wise workflow routing**
-- **Syllabus-aware AI Teacher assistance**
-- **Digital lecture & video library**
-- **QR-based campus navigation**
-- **Location-attached ticket reporting**
+<hr/>
 
-The platform brings together students, tutors, faculty, non-teaching staff, HODs, wardens, maintenance, security, and administrators into one unified structured ecosystem.
+Campus Aid Buddy is an enterprise-grade, role-based campus support system designed to digitize and streamline university operations. It consolidates student service requests, academic assistance, digital library access, and campus navigation into one unified, structured ecosystem.
 
-This project follows a clean architecture approach with a separated backend service layer, ensuring modularity, scalability, and secure role-based access.
+## ✨ Key Features
 
-## 🚀 Key Features
+- **🎫 Unified Service Management**: End-to-end ticketing system for student requests and complaints. Features department-wise routing, status lifecycles, and auto-escalation.
+- **🎓 AI-Powered Academic Assistant**: A syllabus-aware, hybrid Chat/AI system that contextually answers student doubts based on uploaded course material.
+- **📍 Location-Attached Reporting**: Captures precision GPS data across campus zones to improve incident response and build future heat-map insights.
+- **🧭 QR-Based Campus Navigation**: Scan facilities (Hostels, Labs, Library) for instant location details, navigation, and location-tagged ticket creation.
+- **🎥 Digital Resource Library**: Secure, structured metadata-driven repository for video lectures and academic documents.
+- **🤖 Rule-Based Campus Bot**: Instant guidance for campus policies, FAQ routing, and general inquiries—designed with strict anti-hallucination protocols.
 
-### 🎫 Ticket-Based Campus Request & Issue Reporting
+## 🛠 Tech Stack
 
-- Students & campus users can submit requests / complaints
-- Department & category-based routing
-- Auto-generated ticket ID & history log
-- Status lifecycle:
-  ```
-  Submitted → In-Progress → Resolved → Closed → Escalated
-  ```
-- Role-controlled action permissions
-- Transparent tracking & accountability
+Designed with a **separated-backend clean architecture** to ensure modularity, secure role-based access, and microservice migration readiness.
 
-### 📍 Location-Attached Ticket Submission
+### **Frontend**
+- **Framework**: [React 18](https://reactjs.org/) + [TypeScript](https://www.typescriptlang.org/)
+- **Build Tool**: [Vite](https://vitejs.dev/)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/) + [shadcn/ui](https://ui.shadcn.com/) (Radix Primitives)
+- **Routing**: [React Router v6](https://reactrouter.com/)
+- **State & Data**: [TanStack React Query v5](https://tanstack.com/query/latest)
+- **Forms & Validation**: [React Hook Form](https://react-hook-form.com/) + [Zod](https://zod.dev/)
+- **Visuals & Charts**: [Recharts](https://recharts.org/), [Lucide Icons](https://lucide.dev/)
 
-- Captures GPS location only during submission
-- Stores:
-  - latitude / longitude
-  - accuracy
-  - timestamp
-  - campus zone / mapped block (if configured)
-- Prevents miscommunication about incident location
-- Enables future heat-map insights
-
-### 🧭 QR-Based Campus Navigation
-
-- Each campus block / facility can have QR identity
-- Scan → location details + navigation assistance
-- Supports:
-  - classrooms & labs
-  - library
-  - hostel blocks
-  - admin & service facilities
-- Optionally attaches scanned location to ticket
-
-### 🎓 Syllabus-Aware AI Teacher (Hybrid Chat Mode)
-
-- Teachers upload syllabus documents
-- Content indexed and mapped by:
-  - course
-  - department
-  - semester
-  - subject
-- Students ask academic questions
-- AI responds:
-  - ✔ syllabus-based explanations
-  - ✔ context-aware replies
-  - ✔ friendly conversational tone
-  - ✔ fallback clarification prompts when ambiguous
-- Helps reduce repeated doubt queries to faculty
-
-### 🎥 Digital Lecture & Video Library
-
-- Teachers upload recorded lecture videos
-- Metadata mapped to:
-  - department
-  - course
-  - semester
-  - subject
-  - topic / unit
-- Students view mapped content from dashboard
-- Secure storage access — no public links
-- Supports learning continuity & revision access
-
-### 🤖 Campus AI Assistant (Rule-Based)
-
-- Campus-aware information guide
-- Support routing hints
-- Policy & help instructions
-- FAQ-based structured replies
-- Non-hallucinating & safety-aware
-
-## 👥 Supported User Roles
-
-The platform supports multiple campus stakeholders:
-
-- **Students**
-- **Teaching Staff**
-- **Tutors**
-- **Department Staff**
-- **HOD**
-- **Admin**
-- **Hostel Warden**
-- **Maintenance / Facility**
-- **Security**
-- **Transport Officer**
-- **Lab Assistant**
-- **Non-Teaching Staff**
-
-Each role has a dedicated functional dashboard with role-specific actions and restricted visibility.
-
-## 🧩 Architecture & Code Structure
-
-This project uses a **backend-separated clean architecture**.
-
-Backend logic is isolated from UI to ensure:
-- ✔ modularity
-- ✔ secure access abstraction
-- ✔ easier scaling
-- ✔ future microservice migration compatibility
-
-### 🗂 Folder Structure (High-Level)
-
-```
-/backend
-  /auth                 # User authentication and management
-  /tickets              # Ticket operations and management
-  /lectures             # Lecture upload and retrieval
-  /syllabus             # Syllabus management
-  /ai                   # AI service interactions
-  /locations            # Campus location management
-  /qr                   # QR code handling
-  /notices              # Notice/announcement management
-  firebase.ts           # Firebase configuration
-  firestore.service.ts  # Generic Firestore operations
-  storage.service.ts    # File storage operations
-  routing.service.ts    # Ticket routing logic
-  index.ts              # Main exports
-
-/src (React Frontend UI)
-  /components
-    /dashboard          # Dashboard components
-    /layout             # Layout components
-    /tickets            # Ticket-related components
-    /ui                 # Reusable UI components
-  /contexts             # React contexts
-  /hooks                # Custom hooks
-  /lib                  # Utility libraries
-  /pages                # Page components
-  /services             # Frontend service wrappers
-  /types                # TypeScript type definitions
-
-/public                 # Static assets
-  Campus_Aid_Buddyy_Logo_with_Open_Hand_Icon-removebg-preview.png
-  11111.png
-  new image .jpeg
-  favicon.ico
-```
-
-**Frontend communicates only through backend service functions** — no direct Firebase calls from components.
-
-## 🎨 Design System
-
-The platform uses a modern color palette:
-- **Primary**: Orange (`#ff8000`) - For buttons, highlights, and interactive elements
-- **Secondary**: Sage Green (`#74aa95`) - For secondary elements and success states
-- **Accent**: Black (`#000000`) - For text and high-contrast elements
-
-## 🔒 Security & Access Control
-
-- Strict role-based access enforcement
-- Department-wise data isolation
-- Students can access:
-  - ✔ their tickets
-  - ✔ mapped lectures
-  - ✔ syllabus-based AI
-- Teachers manage uploads & responses
-- HOD & Admin receive workflow visibility
-- Sensitive data never exposed publicly
-
-## 🛠 Technology Stack
-
-### Frontend
-- **React 18** with TypeScript
-- **Tailwind CSS** for styling
-- **Vite** for build tooling
-- **React Router** for navigation
-- **Lucide React** for icons
-
-### Backend
-- **Firebase** for database and storage
-- **Firestore** for document storage
-- **Firebase Storage** for file uploads
-- **Firebase Auth** for authentication
-
-### Development Tools
-- **ESLint** for code linting
-- **TypeScript** for type safety
-- **PostCSS** for CSS processing
-
-## 🚀 Getting Started
-
-### Prerequisites
-- Node.js (v16 or higher)
-- npm or yarn
-- Firebase project setup
-
-### Installation
-
-1. **Clone the repository**
-   ```bash
-   git clone <repository-url>
-   cd campus-connect-hub
-   ```
-
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
-
-3. **Configure Firebase**
-   - Update `backend/firebase.ts` with your Firebase configuration
-   - Replace placeholder values with actual Firebase project credentials
-
-4. **Start development server**
-   ```bash
-   npm run dev
-   ```
-
-5. **Open in browser**
-   ```
-   http://localhost:5173
-   ```
-
-### Demo Access
-For testing purposes, you can use any email/password combination to login and explore the platform with different user roles.
-
-## 🧠 Design Principles
-
-This platform is designed to be:
-- **Practical** for real-world campuses
-- **Modular** & extensible
-- **Scalable** across departments
-- **Structured** & accountable
-- **Student-centric** yet admin-efficient
-
-No feature is conceptual — all modules support real workflows.
-
-## 🌱 Future Enhancements (Architecture Ready)
-
-- Ticket priority intelligence
-- Issue heat-map analytics
-- Response time metrics
-- Notification & reminder engine
-- Multi-campus rollout support
-- AI-generated ticket summaries
-
-These are supported by architecture without redesign.
-
-## 🏆 Why This Platform Is Valuable
-
-- ✔ Improves student service experience
-- ✔ Reduces administrative workload
-- ✔ Increases transparency & traceability
-- ✔ Supports academic learning continuity
-- ✔ Strengthens campus digital ecosystem
-
-## 📝 Available Scripts
-
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run preview` - Preview production build
-- `npm run lint` - Run ESLint
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 👨💻 Project Status
-
-This project is under active enhancement.
-New features are added while preserving:
-- **Stability**
-- **Clean architecture practices**
-- **Backward compatibility**
+### **Backend as a Service (BaaS)**
+- **Platform**: [Firebase](https://firebase.google.com/)
+- **Database**: Cloud Firestore
+- **Storage**: Firebase Cloud Storage
+- **Authentication**: Firebase Auth (Role-based access control)
 
 ---
 
-**Built with ❤️ for better campus experiences** 
- 
- 
+## 👥 Supported Roles
+
+The system employs strict Role-Based Access Control (RBAC) with isolated data per department.
+
+| Role | Core Capabilities |
+| :--- | :--- |
+| **Student** | Submit requests, view digital library, ask AI doubts, track tickets. |
+| **Teaching/Tutor** | Upload syllabus & lectures, respond to queries, manage academic tickets. |
+| **HOD / Admin** | Department overview, workflow visibility, handle escalations. |
+| **Warden / Maintenance** | Handle hostel/facility complaints and campus infrastructure requests. |
+| **Security / Transport** | Manage relevant operational tickets and safety reports. |
+
+---
+
+## 🚀 Getting Started
+
+Follow these steps to set up the project locally for development.
+
+### Prerequisites
+
+- [Node.js](https://nodejs.org/) (v18+ recommended)
+- npm, yarn, or pnpm
+- A [Firebase](https://console.firebase.google.com/) Project
+
+### 1. Clone the Repository
+
+```bash
+git clone <repository-url>
+cd Campus_Aid_buddy
+```
+
+### 2. Install Dependencies
+
+```bash
+npm install
+```
+
+### 3. Environment Setup
+
+Create a `.env.local` file in the root directory and add your Firebase configuration credentials:
+
+```properties
+VITE_FIREBASE_API_KEY="your_api_key_here"
+VITE_FIREBASE_AUTH_DOMAIN="your_project_id.firebaseapp.com"
+VITE_FIREBASE_PROJECT_ID="your_project_id"
+VITE_FIREBASE_STORAGE_BUCKET="your_project_id.appspot.com"
+VITE_FIREBASE_MESSAGING_SENDER_ID="your_sender_id"
+VITE_FIREBASE_APP_ID="your_app_id"
+```
+
+> **Note:** Frontend services communicate exclusively via backend abstraction layers (`src/services`). Direct Firebase queries are isolated to these services.
+
+### 4. Run the Development Server
+
+```bash
+npm run dev
+```
+
+Navigate to `http://localhost:5173` to explore the application.
+
+---
+
+## 📂 Project Structure
+
+```text
+├── public/                 # Static assets (images, fonts, icons)
+├── src/                    # Frontend source code
+│   ├── components/         # Reusable UI architecture
+│   │   ├── dashboard/      # Role-specific dashboard widgets
+│   │   ├── tickets/        # Ticket forms and detail views
+│   │   └── ui/             # shadcn/ui generic components (buttons, dialogs)
+│   ├── contexts/           # Global React Contexts (Auth, Theme)
+│   ├── hooks/              # Custom React hooks
+│   ├── lib/                # Util functions, type validators
+│   ├── pages/              # Primary route views
+│   ├── services/           # Backend abstraction (Firestore, Storage)
+│   └── types/              # Global TypeScript interfaces
+├── .env.local              # Local environment variables
+├── tailwind.config.ts      # Tailwind design system configuration
+├── package.json            # Project dependencies and scripts
+└── vite.config.ts          # Vite build configuration
+```
+
+---
+
+## 🎨 Design System
+
+The platform embraces a modern, professional color palette suitable for higher-educational institutions:
+
+- 🟠 **Primary (`#ff8000`)**: Actionable elements, highlights, CTA buttons.
+- 🟢 **Secondary (`#74aa95`)**: Success states, auxiliary buttons, subtle backgrounds.
+- ⚫ **Accent (`#000000`)**: High contrast typography and structural borders.
+
+---
+
+## 📜 Available Scripts
+
+| Command | Description |
+| :--- | :--- |
+| `npm run dev` | Starts the local development server with Hot Module Reload (HMR). |
+| `npm run build` | Compiles and minifies the app for production deployment. |
+| `npm run preview` | Boots up a local server to preview the production build. |
+| `npm run lint` | Runs ESLint to check for code quality and standard adherence. |
+
+---
+
+## 🤝 Contributing
+
+We welcome contributions to the Campus Aid Buddy ecosystem! 
+
+1. **Fork** the repository.
+2. **Create a branch**: `git checkout -b feature/your-feature-name`
+3. **Commit changes**: `git commit -m 'Add: amazing new feature'`
+4. **Push**: `git push origin feature/your-feature-name`
+5. Open a **Pull Request**.
+
+Please ensure your code follows the existing style, passes linting, and adds types where necessary.
+
+---
+
+## 📄 License & Status
+
+- **Status**: Active Development 🟢
+- **License**: MIT License. See [LICENSE](LICENSE) for details.
+
+---
+<div align="center">
+  <b>Built with ❤️ to revolutionize the digital campus experience.</b>
+</div>
