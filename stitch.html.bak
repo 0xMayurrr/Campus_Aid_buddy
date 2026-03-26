@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sign Up | Campus Aid Buddy</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-tertiary-fixed-variant": "#004b72",
+              "tertiary-container": "#00acfd",
+              "error-container": "#ffdad6",
+              "secondary-fixed": "#e2e2e2",
+              "surface-container-high": "#e8e8e8",
+              "on-surface-variant": "#574235",
+              "tertiary": "#006495",
+              "surface": "#f9f9f9",
+              "secondary": "#5d5f5f",
+              "outline": "#8b7263",
+              "on-error-container": "#93000a",
+              "background": "#f9f9f9",
+              "on-tertiary-container": "#003d5d",
+              "tertiary-fixed-dim": "#90cdff",
+              "surface-container": "#eeeeee",
+              "on-secondary-container": "#5f6161",
+              "on-primary-container": "#5e2b00",
+              "primary-fixed-dim": "#ffb787",
+              "on-secondary-fixed": "#1a1c1c",
+              "inverse-on-surface": "#f0f1f1",
+              "primary": "#964900",
+              "secondary-container": "#dcdddd",
+              "surface-container-lowest": "#ffffff",
+              "surface-container-low": "#f3f3f3",
+              "primary-fixed": "#ffdcc7",
+              "on-tertiary": "#ffffff",
+              "on-error": "#ffffff",
+              "on-background": "#1a1c1c",
+              "surface-tint": "#964900",
+              "surface-container-highest": "#e2e2e2",
+              "error": "#ba1a1a",
+              "on-primary": "#ffffff",
+              "on-secondary": "#ffffff",
+              "primary-container": "#ff8000",
+              "surface-variant": "#e2e2e2",
+              "outline-variant": "#dfc1af",
+              "inverse-surface": "#2f3131",
+              "tertiary-fixed": "#cbe6ff",
+              "surface-bright": "#f9f9f9",
+              "on-surface": "#1a1c1c",
+              "on-primary-fixed-variant": "#723600",
+              "surface-dim": "#dadada",
+              "inverse-primary": "#ffb787",
+              "on-primary-fixed": "#311300",
+              "secondary-fixed-dim": "#c6c6c7",
+              "on-tertiary-fixed": "#001e30",
+              "on-secondary-fixed-variant": "#454747"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+        }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-surface min-h-screen flex flex-col">
+<!-- Top Navigation Suppression: Not rendered on Transactional Pages per Rule -->
+<main class="flex-grow flex flex-col md:flex-row min-h-screen">
+<!-- Left Side: Sign Up Form -->
+<section class="w-full md:w-1/2 flex flex-col justify-center items-center px-6 py-12 md:px-16 lg:px-24 bg-surface-container-lowest">
+<div class="max-w-md w-full">
+<!-- Brand Anchor -->
+<div class="mb-12">
+<span class="font-headline font-extrabold tracking-tighter text-2xl text-on-surface">Campus Aid Buddy</span>
+</div>
+<!-- Header Section -->
+<div class="space-y-3 mb-10">
+<h1 class="font-headline font-extrabold text-4xl lg:text-5xl text-on-surface tracking-tight leading-tight">
+                        Join the Campus Revolution
+                    </h1>
+<p class="text-on-surface-variant text-lg leading-relaxed">
+                        Access to thousands of campus resources and templates.
+                    </p>
+</div>
+<!-- Social Action -->
+<div class="space-y-4">
+<button class="w-full flex items-center justify-center gap-3 py-3.5 px-4 bg-surface-container-lowest border border-outline-variant/20 rounded-xl hover:bg-surface-container-low transition-all duration-200 group">
+<svg class="w-5 h-5" fill="currentColor" viewbox="0 0 24 24">
+<path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path>
+<path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path>
+<path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"></path>
+<path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"></path>
+</svg>
+<span class="font-medium text-on-surface">Sign up with Google</span>
+</button>
+<!-- Divider -->
+<div class="relative flex items-center py-4">
+<div class="flex-grow border-t border-outline-variant/10"></div>
+<span class="flex-shrink mx-4 text-xs font-bold text-secondary tracking-widest uppercase">OR</span>
+<div class="flex-grow border-t border-outline-variant/10"></div>
+</div>
+<!-- Traditional Form -->
+<div class="space-y-6">
+<div class="space-y-2">
+<label class="block text-sm font-semibold text-on-surface-variant ml-1" for="email">Email address</label>
+<input class="w-full px-4 py-3.5 bg-surface-container-lowest border border-outline-variant/20 rounded-xl focus:ring-2 focus:ring-primary-container/20 focus:border-primary-container outline-none transition-all placeholder:text-secondary/50" id="email" placeholder="name@university.edu" type="email"/>
+</div>
+<button class="w-full py-4 px-6 bg-gradient-to-br from-primary-container to-primary text-white font-headline font-bold rounded-xl shadow-[0_8px_20px_-4px_rgba(255,128,0,0.3)] hover:shadow-[0_12px_24px_-4px_rgba(255,128,0,0.4)] active:scale-[0.98] transition-all">
+                            Sign up
+                        </button>
+</div>
+</div>
+<!-- Legal Footer -->
+<p class="mt-8 text-center text-sm text-on-surface-variant/80 leading-relaxed">
+                    By signing up, you agree to the <a class="text-primary font-medium hover:underline" href="#">Terms of Use</a> and <a class="text-primary font-medium hover:underline" href="#">Privacy Policy</a>.
+                </p>
+<!-- Login Redirect -->
+<p class="mt-12 text-center text-on-surface-variant font-medium">
+                    Already have an account? <a class="text-primary font-bold hover:underline" href="#">Sign in</a>
+</p>
+</div>
+</section>
+<!-- Right Side: Visual Anchor -->
+<section class="hidden md:flex w-1/2 bg-surface-container-low items-center justify-center p-12 overflow-hidden relative">
+<!-- Decorative Abstract Elements -->
+<div class="absolute top-[-10%] right-[-10%] w-96 h-96 bg-primary-container/10 rounded-full blur-3xl"></div>
+<div class="absolute bottom-[-10%] left-[-10%] w-80 h-80 bg-tertiary-container/10 rounded-full blur-3xl"></div>
+<div class="relative z-10 w-full max-w-lg">
+<!-- Illustration Frame -->
+<div class="bg-surface-container-lowest p-6 rounded-2xl shadow-[0_32px_64px_-12px_rgba(0,0,0,0.08)]">
+<img alt="Modern campus illustration" class="w-full h-auto rounded-xl object-cover aspect-[4/3]" data-alt="Modern abstract illustration of a university campus library with clean lines, soft orange lighting, and minimalist students collaborating in a tech-focused hub." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBOp1b8Wi0gwtAx7nQv0Dzex5ECqASQGzxK8BV2WkF0V3Imjhor_gZ70Fzx1SXksI9PVMcQf_X4ONgBmdX5jGJC4POZ9Ubu5sSZLLCbDLIxP44L0GLRnCNNUAM2PUPqedcMzJtTSbeaBFglAAAzEyA_kevL-333b00vqgeGYDBwB_C4pZXOdcyGFbSojY5SveDS8jiFrljpHuJnPqTzXT61hr3sgwGXifkdxb5aDn_mF_Qg1UFDqZVPE1ammn2_olBeGBebxkDiEqtw"/>
+<div class="mt-8 space-y-4 p-2">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-primary-fixed flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="auto_awesome">auto_awesome</span>
+</div>
+<div>
+<h3 class="font-headline font-bold text-on-surface">Smart Resource Library</h3>
+<p class="text-sm text-on-surface-variant">Over 15,000+ verified campus templates.</p>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-tertiary-fixed flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+</div>
+<div>
+<h3 class="font-headline font-bold text-on-surface">Peer Collaboration</h3>
+<p class="text-sm text-on-surface-variant">Connect with assistants and fellow creators.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Floating Card Detail -->
+<div class="absolute -bottom-6 -right-6 glass-panel p-5 rounded-2xl shadow-xl border border-white/50 hidden lg:block">
+<div class="flex items-center gap-3">
+<div class="flex -space-x-2">
+<img alt="User" class="w-8 h-8 rounded-full border-2 border-white" data-alt="portrait of a young female college student smiling" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA_ccsa_MdCxrIzxYyVOiQZIoSibRT_4xO6WDBfvO1jzDqq6y0IAe_1O4SBj01s3Clzk5sButKm8U7OxzEXhL1I8eTwIoBbAkvB0zwO7_dDF9_PIq42dD9Nk3TX6DrWuPsRpqvhoEWhB2F1K3mfZJh74opJ78awfCwYMpnL_A_TU4UNUsI1SBf1c88kArjOw0y0a4R1jq1uCYd7VmqV4Vv10zMi_cK5miMxTl18efg1sODSt9Dr_9Mxm4MwcGm9FFweQ_zNRiXQM8Yi"/>
+<img alt="User" class="w-8 h-8 rounded-full border-2 border-white" data-alt="portrait of a young male university student" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_iqfqYu9zN7mrvqWihng96sdzAX7XtqBpODvZQr0pmLeBxQdLBHK9Enwtwch6_RpOUb8zWveZ_aTwHwHDjhYAGqAUC1ZBJKkVM4jH2CTo21c0K2JWLelBPwHLLu2IFHnWz9cc5S5yILakmPYYttqGdz1jqXMZbPC65uxpvL5wyOOD9sgCVioZsHEZ634bkbnERPb5oqvsIs7ljKyEI1JCchdePSjjr8ykrMTtIxublwUhzOWVOXasyBunBEoula0lDmUGQtMIRm6V"/>
+</div>
+<span class="text-xs font-bold text-on-surface-variant">+2.4k joined today</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer: Reduced and Focused per Shell Logic -->
+<footer class="bg-surface-container-lowest border-t border-outline-variant/10 py-8">
+<div class="max-w-7xl mx-auto px-8 flex flex-col md:flex-row justify-between items-center gap-4">
+<span class="font-headline font-bold text-on-surface">Campus Aid Buddy</span>
+<p class="text-sm text-on-surface-variant">© 2024 Campus Aid Buddy. The Academic Concierge.</p>
+<div class="flex gap-6">
+<a class="text-sm text-secondary hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="text-sm text-secondary hover:text-primary transition-colors" href="#">Terms of Service</a>
+</div>
+</div>
+</footer>
+</body></html>
