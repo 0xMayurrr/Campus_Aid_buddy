@@ -1,138 +1,40 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { DashboardLayout } from '@/components/layout/DashboardLayout';
-import { StatCard } from '@/components/dashboard/StatCard';
-import { TicketList } from '@/components/tickets/TicketCard';
-import { RoleDashboard } from '@/components/dashboard/RoleDashboard';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
-import { useTickets } from '@/contexts/TicketContext';
-import { Ticket, HelpCircle, CheckCircle, Bell, ArrowRight } from 'lucide-react';
+import { DashboardLayout } from '@/components/layout/DashboardLayout';
+import StudentDashboard from '@/components/dashboard/StudentDashboard';
+import FacultyDashboard from '@/components/dashboard/FacultyDashboard';
+import HODDashboard from '@/components/dashboard/HODDashboard';
+import AdminDashboard from '@/components/dashboard/AdminDashboard';
+import { Loader2 } from 'lucide-react';
 
 export default function Dashboard() {
-  const navigate = useNavigate();
-  const { user } = useAuth();
-  const { tickets, getUserTickets } = useTickets();
+  const { user, isLoading } = useAuth();
 
-  const userTickets = getUserTickets();
-  const pendingCount = userTickets.filter((t) => t.status === 'pending').length;
-  const inProgressCount = userTickets.filter((t) => t.status === 'in_progress').length;
-  const resolvedCount = userTickets.filter((t) => t.status === 'resolved').length;
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-[#0f172a] flex items-center justify-center">
+        <Loader2 className="w-8 h-8 text-orange-500 animate-spin" />
+      </div>
+    );
+  }
 
-  const recentTickets = userTickets.slice(0, 5);
-
-  const getRoleTitle = () => {
-    const roleMap: Record<string, string> = {
-      'student': 'Student Dashboard',
-      'teaching_staff': 'Teaching Staff Dashboard',
-      'tutor': 'Tutor Dashboard',
-      'department_staff': 'Department Staff Dashboard',
-      'hod': 'Head of Department Dashboard',
-      'admin': 'Administrator Dashboard',
-      'hostel_warden': 'Hostel Warden Dashboard',
-      'maintenance': 'Maintenance Dashboard',
-      'security_staff': 'Security Dashboard',
-      'transport_officer': 'Transport Officer Dashboard',
-      'lab_assistant': 'Lab Assistant Dashboard',
-      'supporting_staff': 'Supporting Staff Dashboard'
-    };
-    return roleMap[user?.role || ''] || 'Dashboard';
-  };
-
-  const getRoleSubtitle = () => {
-    if (user?.role === 'student') {
-      return 'Submit requests and track your campus support tickets';
+  const renderDashboard = () => {
+    switch (user?.role) {
+      case 'student': return <StudentDashboard />;
+      case 'faculty': return <FacultyDashboard />;
+      case 'hod': return <HODDashboard />;
+      case 'admin': return <AdminDashboard />;
+      default: return (
+        <div className="text-center py-20">
+          <p className="text-slate-400">Unknown role. Please contact admin.</p>
+        </div>
+      );
     }
-    return `Manage ${user?.role?.replace('_', ' ')} responsibilities and workflows`;
   };
 
   return (
-    <DashboardLayout 
-      title={getRoleTitle()}
-      subtitle={getRoleSubtitle()}
-    >
-      <div className="space-y-8">
-        {/* Role-specific Dashboard Content */}
-        <RoleDashboard />
-
-        {/* Student-specific sections (only for students) */}
-        {user?.role === 'student' && (
-          <>
-            {/* Stats Grid */}
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
-              <StatCard
-                title="My Tickets"
-                value={userTickets.length}
-                subtitle="Total submitted"
-                icon={Ticket}
-                iconColor="text-primary"
-                iconBgColor="bg-blue-100"
-              />
-              <StatCard
-                title="Pending"
-                value={pendingCount + inProgressCount}
-                subtitle="In progress"
-                icon={HelpCircle}
-                iconColor="text-yellow-600"
-                iconBgColor="bg-yellow-100"
-              />
-              <StatCard
-                title="Resolved"
-                value={resolvedCount}
-                subtitle="Completed"
-                icon={CheckCircle}
-                iconColor="text-green-600"
-                iconBgColor="bg-green-100"
-              />
-              <StatCard
-                title="New Notices"
-                value={12}
-                subtitle="Unread"
-                icon={Bell}
-                iconColor="text-purple-600"
-                iconBgColor="bg-purple-100"
-              />
-            </div>
-
-            {/* Recent Tickets */}
-            <Card className="shadow-sm">
-              <CardHeader className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pb-4">
-                <div>
-                  <CardTitle className="text-xl lg:text-2xl">My Recent Tickets</CardTitle>
-                  <p className="text-sm text-muted-foreground mt-1">Track your latest support requests</p>
-                </div>
-                <Button variant="outline" onClick={() => navigate('/tickets')} className="w-full sm:w-auto">
-                  View All Tickets
-                  <ArrowRight className="w-4 h-4 ml-2" />
-                </Button>
-              </CardHeader>
-              <CardContent>
-                <div className="bg-muted/30 rounded-lg p-6">
-                  <div className="flex items-center justify-between mb-4">
-                    <div>
-                      <h3 className="text-lg font-semibold">My Tickets</h3>
-                      <p className="text-sm text-muted-foreground">
-                        {recentTickets.length > 0 ? `${recentTickets.length} recent tickets` : 'No tickets yet'}
-                      </p>
-                    </div>
-                    {recentTickets.length === 0 && (
-                      <Button onClick={() => navigate('/submit')} size="sm">
-                        Submit First Request
-                      </Button>
-                    )}
-                  </div>
-                  <TicketList
-                    tickets={recentTickets}
-                    onTicketClick={(ticket) => navigate(`/tickets/${ticket.id}`)}
-                    emptyMessage="Submit your first help request to get started."
-                  />
-                </div>
-              </CardContent>
-            </Card>
-          </>
-        )}
-      </div>
+    <DashboardLayout>
+      {renderDashboard()}
     </DashboardLayout>
   );
 }
