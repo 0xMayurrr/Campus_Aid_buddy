@@ -1,5 +1,13 @@
 import { useState, useCallback } from 'react';
-import { TicketLocation } from '@/types';
+
+interface TicketLocation {
+  latitude: number;
+  longitude: number;
+  accuracy: number;
+  address: string;
+  campusZone: string;
+  timestamp: Date;
+}
 
 interface GeolocationState {
   location: TicketLocation | null;
@@ -16,11 +24,7 @@ export function useGeolocation() {
 
   const getLocation = useCallback(async (): Promise<TicketLocation | null> => {
     if (!navigator.geolocation) {
-      setState({
-        location: null,
-        error: 'Geolocation is not supported by your browser',
-        isLoading: false,
-      });
+      setState({ location: null, error: 'Geolocation not supported by your browser', isLoading: false });
       return null;
     }
 
@@ -30,83 +34,44 @@ export function useGeolocation() {
       navigator.geolocation.getCurrentPosition(
         async (position) => {
           const { latitude, longitude, accuracy } = position.coords;
-          
-          // Try to get address using reverse geocoding (simplified)
-          let address = '';
+
+          // Reverse geocode using OpenStreetMap (free, no API key)
+          let address = `${latitude.toFixed(5)}, ${longitude.toFixed(5)}`;
           let campusZone = 'Main Campus';
-          
           try {
-            // For demo, we'll use a placeholder. In production, use Google Geocoding API
-            address = `Location (${latitude.toFixed(4)}, ${longitude.toFixed(4)})`;
-            
-            // Determine campus zone based on coordinates (simplified logic)
-            if (latitude > 10.97) {
-              campusZone = 'North Campus';
-            } else if (latitude < 10.96) {
-              campusZone = 'South Campus';
-            } else {
-              campusZone = 'Main Campus';
+            const res = await fetch(
+              `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`
+            );
+            const data = await res.json();
+            if (data?.display_name) {
+              address = data.display_name;
             }
-          } catch (e) {
-            console.log('Geocoding not available');
-          }
+            // Simple campus zone detection
+            if (latitude > 10.97) campusZone = 'North Campus';
+            else if (latitude < 10.96) campusZone = 'South Campus';
+            else campusZone = 'Main Campus';
+          } catch { }
 
-          const locationData: TicketLocation = {
-            latitude,
-            longitude,
-            accuracy,
-            address,
-            campusZone,
-            timestamp: new Date(),
-          };
-
-          setState({
-            location: locationData,
-            error: null,
-            isLoading: false,
-          });
+          const locationData: TicketLocation = { latitude, longitude, accuracy, address, campusZone, timestamp: new Date() };
+          setState({ location: locationData, error: null, isLoading: false });
           resolve(locationData);
         },
         (error) => {
-          let errorMessage = 'Unable to get location';
-          switch (error.code) {
-            case error.PERMISSION_DENIED:
-              errorMessage = 'Location permission denied';
-              break;
-            case error.POSITION_UNAVAILABLE:
-              errorMessage = 'Location information unavailable';
-              break;
-            case error.TIMEOUT:
-              errorMessage = 'Location request timed out';
-              break;
-          }
-          setState({
-            location: null,
-            error: errorMessage,
-            isLoading: false,
-          });
+          const msg =
+            error.code === error.PERMISSION_DENIED ? 'Location permission denied. Please allow access.' :
+            error.code === error.POSITION_UNAVAILABLE ? 'Location unavailable. Try again.' :
+            'Location request timed out.';
+          setState({ location: null, error: msg, isLoading: false });
           resolve(null);
         },
-        {
-          enableHighAccuracy: true,
-          timeout: 10000,
-          maximumAge: 0,
-        }
+        { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
       );
     });
   }, []);
 
   const clearLocation = useCallback(() => {
-    setState({
-      location: null,
-      error: null,
-      isLoading: false,
-    });
+    setState({ location: null, error: null, isLoading: false });
   }, []);
 
-  return {
-    ...state,
-    getLocation,
-    clearLocation,
-  };
+  return { ...state, getLocation, clearLocation };
 }
